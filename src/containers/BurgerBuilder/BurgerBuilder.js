@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Aux from '../../hoc/Auxi';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 export default class BurgerBuiler extends Component {
     /*constructor (props) {
@@ -16,7 +18,8 @@ export default class BurgerBuiler extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchasable: false
+        purchasable: false,
+        isPurchaseInProgress: false //purchasing neki
     }
 
     INGREDIENTS_PRICES = {
@@ -66,6 +69,11 @@ export default class BurgerBuiler extends Component {
         this.updatePurchaseState(updatedIngredients);
     }
 
+    isPurchaseInProgressHandler = () => {  //purchaseHandler neki
+        this.setState({isPurchaseInProgress: true})
+
+    }
+
     render() {
 
         const disabledInfo = { ...this.state.ingredients };
@@ -76,13 +84,17 @@ export default class BurgerBuiler extends Component {
         console.log(disabledInfo)
         return (
             <Aux>
+                <Modal show={this.state.isPurchaseInProgress}>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     disabled={disabledInfo}
                     purchasable={this.state.purchasable}
-                    totalPrice={this.state.totalPrice} />
+                    totalPrice={this.state.totalPrice}
+                    ordered={this.isPurchaseInProgressHandler}/>
             </Aux>
         )
     }
