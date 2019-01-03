@@ -37,7 +37,7 @@ export default class BurgerBuiler extends Component {
                 .some(function (item) {
                     return item > 0;
                 })
-        this.setState({purchasable: purchasable})
+        this.setState({ purchasable: purchasable })
     }
 
     addIngredientHandler = (type) => {
@@ -70,8 +70,16 @@ export default class BurgerBuiler extends Component {
     }
 
     isPurchaseInProgressHandler = () => {  //purchaseHandler neki
-        this.setState({isPurchaseInProgress: true})
+        this.setState({ isPurchaseInProgress: true })
 
+    }
+
+    purchaseCancelHandler = () => {
+        this.setState({ isPurchaseInProgress: false })
+    }
+
+    purchaseContinueHandler = () => {
+        alert("You contuine...")
     }
 
     render() {
@@ -81,11 +89,15 @@ export default class BurgerBuiler extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
 
-        console.log(disabledInfo)
         return (
             <Aux>
-                <Modal show={this.state.isPurchaseInProgress}>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                <Modal show={this.state.isPurchaseInProgress} modalClosed={this.purchaseCancelHandler}>
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        purchaseCanceled={this.purchaseCancelHandler}
+                        price={this.state.totalPrice}
+                        purchaseContinued={this.purchaseContinueHandler}
+                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
@@ -94,7 +106,7 @@ export default class BurgerBuiler extends Component {
                     disabled={disabledInfo}
                     purchasable={this.state.purchasable}
                     totalPrice={this.state.totalPrice}
-                    ordered={this.isPurchaseInProgressHandler}/>
+                    ordered={this.isPurchaseInProgressHandler} />
             </Aux>
         )
     }
