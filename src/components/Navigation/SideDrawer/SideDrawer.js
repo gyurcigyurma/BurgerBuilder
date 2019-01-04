@@ -3,7 +3,7 @@ import NavigationItems from '../NavigationItems/Navigationitems';
 import Logo from '../../Logo/Logo';
 import classes from './SideDrawer.css';
 import BackDrop from '../../UI/Backdrop/Backdrop';
-import Auxi from '../../../hoc/Auxi';
+import Auxi from '../../../hoc/Auxi/Auxi';
 
 
 
