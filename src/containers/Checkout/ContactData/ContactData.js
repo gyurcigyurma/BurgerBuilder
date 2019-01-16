@@ -181,9 +181,11 @@ export default class ContactData extends Component {
                 <Button btnType="Success" disabled={!this.state.formIsValid} clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
+
         if (this.state.loading) {
             form = <Spinner />
         }
+        
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your contact data</h4>
