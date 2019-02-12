@@ -62,9 +62,13 @@ class BurgerBuiler extends Component {
         this.updatePurchaseState(updatedIngredients);
     }
 
-    isPurchaseInProgressHandler = () => {  //purchaseHandler neki
-        this.setState({ isPurchaseInProgress: true })
-
+    isPurchaseInProgressHandler = () => {
+        //purchaseHandler neki
+        if (this.props.isAuthenticated) {
+            this.setState({ isPurchaseInProgress: true })
+        } else {
+            this.props.history.push('/auth')
+        }
     }
 
     purchaseCancelHandler = () => {
@@ -73,15 +77,8 @@ class BurgerBuiler extends Component {
 
     purchaseContinueHandler = () => {
         this.props.onInitPurchase();
-        // const queryParams = [];
-        // for (let i in this.state.ingredients) {
-        //     queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
-        // }
 
-        // queryParams.push('price=' + this.state.totalPrice);
-        // const queryString = queryParams.join('&');
-
-        this.props.history.push('/checkout' );
+        this.props.history.push('/checkout');
     }
 
     render() {
@@ -104,6 +101,7 @@ class BurgerBuiler extends Component {
                         disabled={disabledInfo}
                         purchasable={this.updatePurchaseState(this.props.ings)}
                         totalPrice={this.props.price}
+                        isAuth={this.props.isAuthenticated}
                         ordered={this.isPurchaseInProgressHandler} />
                 </Auxi>);
 
@@ -131,7 +129,7 @@ const mapStateToProps = state => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         error: state.order.error,
-
+        isAuthenticated: state.auth.token !== null
     };
 }
 const mapDispatchToProps = dispatch => {

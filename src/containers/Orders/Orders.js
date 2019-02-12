@@ -10,7 +10,12 @@ class Orders extends Component {
 
 
     componentDidMount() {
-        this.props.onFetchOrders();
+        console.log('MÁUNT')
+        this.props.onFetchOrders(this.props.token);
+    }
+
+    componentWillUnmount ( ) {
+        console.log('itten')
     }
     render() {
         let orders = <Spinner></Spinner>;
@@ -24,7 +29,7 @@ class Orders extends Component {
             ))
         }
         return (
-            <div>
+            <div> maci
                 {orders}
             </div>
         );
@@ -34,11 +39,12 @@ class Orders extends Component {
 
 const mapStateToProps = state => ({
     orders: state.order.orders,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onFetchOrders: () => dispatch(actions.fetchOrders())
+    onFetchOrders: (token) => dispatch(actions.fetchOrders(token))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
