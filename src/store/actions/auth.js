@@ -12,16 +12,16 @@ export const authSuccess = (idToken, userId) => ({
 })
 
 export const authFail = (error) => ({
-    type: actionTypes.AUTH_FAIL,
+    type: actionTypes.AUTH_INITIATE_LOGOUT,
     error
 })
 
 export const logout = () => {
-    localStorage.removeItem('expirationTime');
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
+    // localStorage.removeItem('expirationTime');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('userId');
     return {
-        type: actionTypes.AUTH_LOGOUT
+        type: actionTypes.AUTH_INITIATE_LOGOUT
     }
 }
 
